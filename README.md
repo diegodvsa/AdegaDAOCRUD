@@ -5,6 +5,7 @@ Criado para praticar e disponibilizar um exemplo de uso de JAVA com banco de dad
 
 ## Funções gerais
 * Tela splash (apresentação) ao abrir o programa
+* Sistema de Login
 * Menu principal
 * Inserir, Editar e Deletar registros através de campos e botões
 * Visualizar registros por meio de jTable
@@ -18,7 +19,31 @@ Criado para praticar e disponibilizar um exemplo de uso de JAVA com banco de dad
 Basta clonar o repositório e utilizar o mesmo para estudo, modificações ou mesmo como base de um projeto pequeno.
 
 
-![]
+## Telas do sistema:
+
+* Tela Splash
+
+![Tela Splash](/src/ImagensTelas/Splash.png) 
+
+* Tela de Login
+
+![Tela Login](/src/ImagensTelas/Login.png)
+
+* Menu Principal
+
+![Tela Menu](/src/ImagensTelas/Menu.png)
+
+* Clientes
+
+![Tela Cliente](/src/ImagensTelas/Cliente.png)
+
+* Produtos
+
+![Tela Produtos](/src/ImagensTelas/Produtos.png)
+
+
+
+
 
 
 
