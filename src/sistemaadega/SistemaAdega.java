@@ -5,6 +5,11 @@
  */
 package sistemaadega;
 
+import java.awt.Component;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+
 
 /**
  *
@@ -18,6 +23,25 @@ public class SistemaAdega {
     public static void main(String[] args) {
         Telas.TelaSplash splash = new Telas.TelaSplash();
         splash.setVisible(true);
+    }
+    
+    public static class MetodosGerais{
+        public static void limparCampos(JFrame jframe)
+        {
+            for (int i=0; i < jframe.getContentPane().getComponentCount(); i++) {   
+                Component c = jframe.getContentPane().getComponent(i);   
+                if (c instanceof JTextField) {   
+                    JTextField field = (JTextField) c;   
+                    field.setText("");  
+                }
+                if(c instanceof JComboBox){
+                    JComboBox field = (JComboBox) c;
+                    field.setSelectedIndex(0);
+                }
+                 
+        
+            }
+        }
     }
     
 }

@@ -8,12 +8,12 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Diego Devesa
  * Classe para conexão ao banco de dados
  * 
  */
 public class Conexao {  
     
+    //retorna a conexão com o banco, em caso de erro retorna null
     public Connection getConnection()
     {
         try{
@@ -24,4 +24,5 @@ public class Conexao {
         }
         return null;
     }
+    
 }

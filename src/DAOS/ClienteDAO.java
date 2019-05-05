@@ -18,14 +18,25 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Diego
+ * Classe para comunicação com o banco de dados
+ * 
  */
+
 public class ClienteDAO {
     
+    /*
+        Insere cliente no banco, recebe como parametro um objeto Cliente
+        retorna true se efetuado com sucesso, e false se não.
+    */
     public boolean inserir(Cliente cliente)
     {
+        
         String sql = "insert into cliente (idade,nome,cep,logradouro,numero, bairro, cidade, estado) values (?,?,?,?,?,?,?,?)";
+        
+        //try-with para fechar automaticamente a Conexão e o PreparedStatement
         try(Connection con = new Conexao().getConnection();PreparedStatement stmt = con.prepareStatement(sql);){       
         
+        //atribuição dos parametros da consulta sql 
         stmt.setInt(1, cliente.getIdade());
         stmt.setString(2, cliente.getNome());
         stmt.setString(3, cliente.getCep());
@@ -48,8 +59,13 @@ public class ClienteDAO {
         return false;
     }
     
+    /*
+        Altera cliente no banco, recebe como parametro um objeto Cliente
+        retorna true se efetuado com sucesso, e false se não.
+    */
     public boolean update(Classes.Cliente cliente)
     {
+        
         String sql = "UPDATE cliente " +
                             "SET " +
                             "idade = ?, " +
@@ -62,11 +78,11 @@ public class ClienteDAO {
                             "estado = ? " +
                             "WHERE id_cliente = ?";
         
-        
+        //try-with para fechar automaticamente a Conexão e o PreparedStatement
         try(Connection con = new Conexao().getConnection();PreparedStatement stmt = con.prepareStatement(sql);)
         {
             
-                      
+            //atribuição dos parametros da consulta sql 
             stmt.setInt(1, cliente.getIdade());
             stmt.setString(2, cliente.getNome());
             stmt.setString(3, cliente.getCep());
@@ -90,18 +106,24 @@ public class ClienteDAO {
         return false;
     }
     
+    /*
+        Deleta cliente no banco, recebe como parametro um inteiro (id_cliente)
+        retorna true se efetuado com sucesso, e false se não.
+    */
     public boolean delete(int id)
     {
         String sql = "DELETE FROM cliente WHERE id_cliente  = ? ";
+        
+        //try-with para fechar automaticamente a Conexão e o PreparedStatement
         try(Connection con = new Conexao().getConnection();PreparedStatement stmt = con.prepareStatement(sql);)
         {
+            //atribuição dos parametros da consulta sql 
             stmt.setInt(1, id);
             
             stmt.execute();
             
             JOptionPane.showMessageDialog(null, "Dados deletados com sucesso!"); 
-            return true;
-            
+            return true;            
         }
         catch(SQLException ex)
         {
@@ -110,14 +132,27 @@ public class ClienteDAO {
         return false;
     }
     
+    /*
+        retorna uma lista genérica com todos os Clientes no banco, utilizada para preencher
+        a tabela
+    */
     public List<Cliente> selectAll()
     {
         String sql = "SELECT id_cliente, nome, idade FROM cliente";
+        
+        //instaancia da lista
         List<Cliente> clientes = new ArrayList<>();
+        
+        //try-with para fechar automaticamente a Conexão e o PreparedStatement
         try(Connection con = new Conexao().getConnection(); PreparedStatement stmt = con.prepareStatement(sql);){
             
+            //result set com os resultados da consulta
             ResultSet rs = stmt.executeQuery();
             
+            /*
+                loop para percorrer todos os registros encontrados e instanciar um 
+                Cliente novo para adicionar à lista
+            */
             while(rs.next())
             {
                 Cliente cliente = new Cliente(
@@ -136,15 +171,27 @@ public class ClienteDAO {
         return clientes;
     }
     
+    
+    /*
+        retorna um objeto Cliente com o id definido no parametro, utilizada para preencher
+        os campos
+    */
     public Cliente select(int id)
     {
         Cliente cliente = null;
+        
         String sql = "SELECT * FROM cliente WHERE id_cliente = ?";
+        
+        //try-with para fechar automaticamente a Conexão e o PreparedStatement
         try(Connection con = new Conexao().getConnection(); PreparedStatement stmt = con.prepareStatement(sql);){
             
+            //atribuição dos parametros da consulta sql
             stmt.setInt(1, id);
+            
+            //result set com os resultados da consulta
             ResultSet rs = stmt.executeQuery();
             
+            //loop para atribuir os valores do cliente buscado a um objeto cliente
             while(rs.next())
             {
                 cliente = new Cliente(

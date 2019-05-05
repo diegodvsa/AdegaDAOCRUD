@@ -8,139 +8,12 @@ package Classes;
 /**
  *
  * @author Diego
+ * 
  */
 public final class Cliente {
 
-    public Cliente() {
-        
-    }
-
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * @return the idade
-     */
-    public int getIdade() {
-        return idade;
-    }
-
-    /**
-     * @param idade the idade to set
-     */
-    public void setIdade(int idade) {
-        this.idade = idade;
-    }
-
-    /**
-     * @return the nome
-     */
-    public String getNome() {
-        return nome;
-    }
-
-    /**
-     * @param nome the nome to set
-     */
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    /**
-     * @return the cep
-     */
-    public String getCep() {
-        return cep;
-    }
-
-    /**
-     * @param cep the cep to set
-     */
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
-    /**
-     * @return the logradouro
-     */
-    public String getLogradouro() {
-        return logradouro;
-    }
-
-    /**
-     * @param logradouro the logradouro to set
-     */
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
-    }
-
-    /**
-     * @return the numero
-     */
-    public String getNumero() {
-        return numero;
-    }
-
-    /**
-     * @param numero the numero to set
-     */
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    /**
-     * @return the bairro
-     */
-    public String getBairro() {
-        return bairro;
-    }
-
-    /**
-     * @param bairro the bairro to set
-     */
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    /**
-     * @return the cidade
-     */
-    public String getCidade() {
-        return cidade;
-    }
-
-    /**
-     * @param cidade the cidade to set
-     */
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    /**
-     * @return the estado
-     */
-    public String getEstado() {
-        return estado;
-    }
-
-    /**
-     * @param estado the estado to set
-     */
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
     
+    //declaração dos atributos
     private int id;
     private int idade;
     private String nome;
@@ -151,7 +24,23 @@ public final class Cliente {
     private String cidade;
     private String estado;
     
-    public Cliente(int id, int idade, String nome, String cep, String logradouro, String numero, String bairro, String cidade,String estado)
+    //construtor simples
+    public Cliente() {
+        
+    }
+    
+    //construtor para popular a tabela
+    public Cliente(int id, String nome, int idade)
+    {
+        setId(id);
+        setIdade(idade);
+        setNome(nome);
+    }
+    
+    //construtor completo
+    public Cliente(int id, int idade, String nome, 
+            String cep, String logradouro, String numero, 
+            String bairro, String cidade,String estado)
     {
         setId(id);
         setIdade(idade);
@@ -161,14 +50,103 @@ public final class Cliente {
         setNumero(numero);
         setBairro(bairro);
         setCidade(cidade);
-        setEstado(estado);
-        
+        setEstado(estado);        
     }
     
-    public Cliente(int id, String nome, int idade)
-    {
-        setId(id);
-        setIdade(idade);
-        setNome(nome);
+
+    
+    /*
+    *   Acessores
+    *   @parametros - servem para atribuir o valor dado à propriedade
+    */
+    
+    public int getId() {
+        return id;
     }
+
+    
+    public void setId(int id) {
+        this.id = id;
+    }
+
+   
+    public int getIdade() {
+        return idade;
+    }
+
+    
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
+
+    
+    public String getNome() {
+        return nome;
+    }
+
+    
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    
+    public String getCep() {
+        return cep;
+    }
+
+    
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+    }
+
+    
+    public String getNumero() {
+        return numero;
+    }
+
+    
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    
+    public String getBairro() {
+        return bairro;
+    }
+
+    
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    
+    public String getCidade() {
+        return cidade;
+    }
+
+    
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    
+    public String getEstado() {
+        return estado;
+    }
+
+    
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+       
 }

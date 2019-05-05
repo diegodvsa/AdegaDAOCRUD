@@ -9,6 +9,7 @@ import DAOS.ProdutoDAO;
 import static java.lang.Double.parseDouble;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import sistemaadega.SistemaAdega;
 
 /**
  *
@@ -286,37 +287,75 @@ public class TelaProdutos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        Produto produto = new Produto(0,(String)txtAlcoolico.getSelectedItem(),Double.parseDouble(txtTeor.getText().replace(",",".")),txtNome.getText(),txtDescricao.getText(),Double.parseDouble(txtLitragem.getText()),(String)txtUnidade.getSelectedItem(),Double.parseDouble(txtPreco.getText().replace(",",".")));
+        
+        //instancia novo objeto produto
+        Produto produto = new Produto(0,(String)txtAlcoolico.getSelectedItem(),
+                Double.parseDouble(txtTeor.getText().replace(",",".")),txtNome.getText(),
+                txtDescricao.getText(),Double.parseDouble(txtLitragem.getText()),
+                (String)txtUnidade.getSelectedItem(),Double.parseDouble(txtPreco.getText().replace(",",".")));
+        
+        //instancia da classe para interação com o banco
         ProdutoDAO pdtd = new ProdutoDAO();
+        
+        //insere produto
         pdtd.inserir(produto);
+        
+        //preenche tabela
         preencherTabela();
-        limparCampos();
+        
+        //limpa campos
+        SistemaAdega.MetodosGerais.limparCampos(this);
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void tbProdutosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbProdutosMouseReleased
+        //se houver linha selecionada
         if(tbProdutos.getSelectedRow() != -1){
+            //instancia classe para interação com o banco
             ProdutoDAO pdao = new ProdutoDAO();
+            
+            //preenche campos com informações do produto selecionado
             preencherCampos(pdao.select(Integer.parseInt(tbProdutos.getValueAt(tbProdutos.getSelectedRow(),0).toString())));
         }
     }//GEN-LAST:event_tbProdutosMouseReleased
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if(JOptionPane.showConfirmDialog(null, "Deseja realmente editar o produto de código " + txtCodigo.getText() + "?", "Confirmação de edição", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){            
-            Produto produto = new Produto(Integer.parseInt(txtCodigo.getText()),txtAlcoolico.getSelectedItem().toString(),Double.parseDouble(txtTeor.getText().replace(",",".")),txtNome.getText(),txtDescricao.getText(),Double.parseDouble(txtLitragem.getText().replace(",",".")),txtUnidade.getSelectedItem().toString(),Double.parseDouble(txtPreco.getText().replace(",",".")));
+        //dialogo para confirmar edição
+        if(JOptionPane.showConfirmDialog(null, "Deseja realmente editar o produto de código " + txtCodigo.getText() + "?",
+                "Confirmação de edição", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){            
+            
+            //instancia objeto produto com os dados dos campos
+            Produto produto = new Produto(Integer.parseInt(txtCodigo.getText())
+                    ,txtAlcoolico.getSelectedItem().toString(),
+                    Double.parseDouble(txtTeor.getText().replace(",",".")),txtNome.getText(),
+                    txtDescricao.getText(),Double.parseDouble(txtLitragem.getText().replace(",",".")),
+                    txtUnidade.getSelectedItem().toString(),Double.parseDouble(txtPreco.getText().replace(",",".")));
+            
+            //instancia classe para interação com o banco
             ProdutoDAO edt = new ProdutoDAO();
+            
+            //edita dados
             edt.update(produto);
+            
             preencherTabela();
-            limparCampos();
+            
+            SistemaAdega.MetodosGerais.limparCampos(this);
         }        
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        if(JOptionPane.showConfirmDialog(null, "Deseja realmente deletar o produto de código " + txtCodigo.getText() + "?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0)
+        //dialogo para confirmar exclusão
+        if(JOptionPane.showConfirmDialog(null, "Deseja realmente deletar o produto de código " + txtCodigo.getText() + "?", 
+                "Confirmação de exclusão", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0)
         {
+            //instancia classe para interação com o banco
             DAOS.ProdutoDAO delts = new DAOS.ProdutoDAO();
+            
+            //chama metodo para deletar
             delts.delete(Integer.parseInt(txtCodigo.getText()));
+            
+            
             preencherTabela();
-            limparCampos();
+            SistemaAdega.MetodosGerais.limparCampos(this);
         }
     }//GEN-LAST:event_btnDeletarActionPerformed
 
@@ -335,14 +374,19 @@ public class TelaProdutos extends javax.swing.JFrame {
     
     private void preencherTabela()
     {
+        //instancia modelo da tabela
         DefaultTableModel modelo = (DefaultTableModel) tbProdutos.getModel();
+        
+        //limpa registros da tabela
         modelo.setRowCount(0);
         
+        //instancia classe para interação com o banco
         ProdutoDAO pdao = new ProdutoDAO();
         
+        //para cada produto na lista, adicionar linha com os atributos
         for(Produto p: pdao.selectAll()){
             modelo.addRow(new Object[]{
-                p.getId_produto(),              
+                p.getId_produto(),     
                 p.getNome(),
                 p.getPreco(),
                 p.getAlcoolico()                
@@ -350,17 +394,7 @@ public class TelaProdutos extends javax.swing.JFrame {
         }
     }
     
-    private void limparCampos()
-    {   
-        txtCodigo.setText("");
-        txtAlcoolico.setSelectedItem("");
-        txtTeor.setText("");
-        txtNome.setText("");
-        txtDescricao.setText("");
-        txtLitragem.setText("");
-        txtUnidade.setSelectedItem("");
-        txtPreco.setText("");               
-    }
+   
             
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

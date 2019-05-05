@@ -20,11 +20,19 @@ import javax.swing.JOptionPane;
 
 
 public class ProdutoDAO {
+    
+    /*
+        Insere produto no banco, recebe como parametro um objeto produto
+        retorna true se efetuado com sucesso, e false se não.
+    */
     public boolean inserir(Produto produto)
     {
         String sql = "insert into produto (alcoolico, teor, nome, descricao, litragem, unidade, preco)values (?,?,?,?,?,?,?)";
+        
+        //try-with para fechar automaticamente a Conexão e o PreparedStatement
         try(Connection con = new Conexao().getConnection(); PreparedStatement stmt = con.prepareStatement(sql);){
-            
+        
+        //atribuição dos parametros da consulta sql
         stmt.setString(1, produto.getAlcoolico());
         stmt.setDouble(2, produto.getTeor());
         stmt.setString(3, produto.getNome());
@@ -46,6 +54,10 @@ public class ProdutoDAO {
         return false;
     }
     
+     /*
+        Edita produto no banco, recebe como parametro um objeto produto
+        retorna true se efetuado com sucesso, e false se não.
+    */    
     public boolean update(Produto produto)
     {
         String sql = "UPDATE produto " +
@@ -59,10 +71,11 @@ public class ProdutoDAO {
                             "preco = ? " +                            
                             "WHERE id_produto = ?;";
         
+        //try-with para fechar automaticamente a Conexão e o PreparedStatement
         try(Connection con = new Conexao().getConnection();PreparedStatement stmt = con.prepareStatement(sql);)
         {
             
-            
+            //atribuição dos parametros da consulta sql
             stmt.setString(1, produto.getAlcoolico());
             stmt.setDouble(2, produto.getTeor());
             stmt.setString(3, produto.getNome());
@@ -85,11 +98,18 @@ public class ProdutoDAO {
         return false;
     }
     
+    /*
+        Deleta produto no banco, recebe como parametro um inteiro (id_produto)
+        retorna true se efetuado com sucesso, e false se não.
+    */
     public boolean delete(int id)
     {
         String sql = "DELETE FROM produto WHERE id_produto = ? ";
+        
+        //try-with para fechar automaticamente a Conexão e o PreparedStatement
         try(Connection con = new Conexao().getConnection();PreparedStatement stmt = con.prepareStatement(sql);)
         {
+            //atribuição dos parametros da consulta sql
             stmt.setInt(1, id);
             
             stmt.execute();
@@ -105,14 +125,27 @@ public class ProdutoDAO {
         return false;
     }
     
+    /*
+        retorna uma lista genérica com todos os Produtos no banco, utilizada para preencher
+        a tabela
+    */
     public List<Produto> selectAll()
     {
         String sql = "SELECT id_produto, nome, preco, alcoolico FROM produto";
+        
+        //instaancia da lista
         List<Produto> produtos = new ArrayList<>();
+        
+        //try-with para fechar automaticamente a Conexão e o PreparedStatement
         try(Connection con = new Conexao().getConnection(); PreparedStatement stmt = con.prepareStatement(sql);){
             
+            //result set com os resultados da consulta
             ResultSet rs = stmt.executeQuery();
             
+            /*
+                loop para percorrer todos os registros encontrados e instanciar um 
+                produto novo para adicionar à lista
+            */
             while(rs.next())
             {
                 Produto produto = new Produto(
@@ -132,15 +165,26 @@ public class ProdutoDAO {
         return produtos;
     }
     
+    
+    /*
+        retorna um objeto Produto com o id definido no parametro, utilizada para preencher
+        os campos
+    */
     public Produto select(int id)
     {
         Produto produto = null;
         String sql = "SELECT * FROM produto WHERE id_produto = ?";
+        
+        
         try(Connection con = new Conexao().getConnection(); PreparedStatement stmt = con.prepareStatement(sql);){
             
+            //atribuição dos parametros da consulta sql 
             stmt.setInt(1, id);
+            
+            //result set com os resultados da consulta
             ResultSet rs = stmt.executeQuery();
             
+            //loop para atribuir os valores do cliente buscado a um objeto cliente
             while(rs.next())
             {
                 produto = new Produto(

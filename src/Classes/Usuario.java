@@ -11,18 +11,26 @@ package Classes;
  */
 public class Usuario {
     
+    //declaração dos atributos
     private String login;
     private String senha;    
     
+    //construtor simples
     public Usuario(){
         
     }
     
+    //construtor completo
     public Usuario(String login, String senha){
         this.setLogin(login);
         this.setSenha(senha);
     }
     
+    
+    /*
+    *   Acessores
+    *   @parametros - servem para atribuir o valor dado à propriedade
+    */
     public String getLogin() {
         return login;
     }

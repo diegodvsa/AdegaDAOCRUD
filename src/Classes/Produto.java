@@ -12,11 +12,23 @@ import java.util.HashSet;
  * @author Diego
  */
 public class Produto {
-
+    
+    //declaração dos atributos
+    private int id_produto;
+    private String alcoolico;
+    private double teor;
+    private String nome;
+    private String descricao;
+    private double litragem;
+    private String unidade;
+    private double preco;
+    
+    //construtor simples
     public Produto(){
         
     }
     
+    //construtor para a tabela
     public Produto(int id, String nome, double preco, String alcoolico){
         this.setId_produto(id);
         this.setNome(nome);
@@ -24,7 +36,9 @@ public class Produto {
         this.setAlcoolico(alcoolico);        
     }
     
-    public Produto(int id, String alcoolico, double teor, String nome, String descricao, double litragem, String unidade, double preco){
+    //construtor competo
+    public Produto(int id, String alcoolico, double teor, String nome,
+            String descricao, double litragem, String unidade, double preco){
         this.setId_produto(id);
         this.setAlcoolico(alcoolico);
         this.setTeor(teor);
@@ -35,7 +49,10 @@ public class Produto {
         this.setPreco(preco);
     }
             
-    
+    /*
+    *   Acessores
+    *   @parametros - servem para atribuir o valor dado à propriedade
+    */
     public int getId_produto() {
         return id_produto;
     }
@@ -99,14 +116,6 @@ public class Produto {
     public void setPreco(double preco) {
         this.preco = preco;
     }
-    private int id_produto;
-    private String alcoolico;
-    private double teor;
-    private String nome;
-    private String descricao;
-    private double litragem;
-    private String unidade;
-    private double preco;
-    
+   
     
 }

@@ -9,13 +9,9 @@ import Classes.Cliente;
 import DAOS.ClienteDAO;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import sistemaadega.SistemaAdega;
 
 
-
-/**
- *
- * @author Diego
- */
 public class TelaClientes extends javax.swing.JFrame {
 
     
@@ -320,32 +316,66 @@ public class TelaClientes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        Cliente cliente = new Classes.Cliente(0,Integer.parseInt(txtIdade.getText()),txtNome.getText(),txtCep.getText(),txtLogradouro.getText(),txtNumero.getText(),txtBairro.getText(),txtCidade.getText(),"SP");
+        
+        //instancia usuario utilizando valores dos campos
+        Cliente cliente = new Classes.Cliente(0,Integer.parseInt(txtIdade.getText()),
+                txtNome.getText(),txtCep.getText(),txtLogradouro.getText(),
+                txtNumero.getText(),txtBairro.getText(),txtCidade.getText(),"SP");
+        
+        //instancia classe ClienteDao para interação com o banco
         DAOS.ClienteDAO insert = new DAOS.ClienteDAO();
-        insert.inserir(cliente);
+        
+        //chama metodo para inserir
+        insert.inserir(cliente);        
+        
+        SistemaAdega.MetodosGerais.limparCampos(this);
         preencherTabela();
-        limparCampos();
+        
         
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        if(JOptionPane.showConfirmDialog(null, "Deseja realmente deletar o cliente de código " + txtCodigo.getText() + "?", "Confirmação de exclusão", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0)
+        //dialogo para confirmação de exclusão do cliente
+        if(JOptionPane.showConfirmDialog(null, "Deseja realmente deletar o cliente de código " + txtCodigo.getText() + "?",
+                "Confirmação de exclusão", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0)
         {
+            //instancia classe para interação com o banco
             DAOS.ClienteDAO delts = new DAOS.ClienteDAO();
+            
+            //chama metodo para deletar
             delts.delete(Integer.parseInt(txtCodigo.getText()));
+            
+            //preenche tabela com os registros
             preencherTabela();
-            limparCampos();
+            
+            //limpa campos
+            SistemaAdega.MetodosGerais.limparCampos(this);
         }
         
     }//GEN-LAST:event_btnDeletarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if(JOptionPane.showConfirmDialog(null, "Deseja realmente editar o cliente de código " + txtCodigo.getText() + "?", "Confirmação de edição", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
-            Cliente cliente = new Classes.Cliente(Integer.parseInt(txtCodigo.getText()),Integer.parseInt(txtIdade.getText()),txtNome.getText(),txtCep.getText(),txtLogradouro.getText(),txtNumero.getText(),txtBairro.getText(),txtCidade.getText(),"SP");
+        //dialogo para confirmar edição
+        if(JOptionPane.showConfirmDialog(null, "Deseja realmente editar o cliente de código " + txtCodigo.getText() + "?",
+                "Confirmação de edição", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
+            
+            //instancia novo objeto cliente com os novos dados
+            Cliente cliente = new Classes.Cliente(Integer.parseInt(txtCodigo.getText()),
+                    Integer.parseInt(txtIdade.getText()),txtNome.getText(),txtCep.getText(),
+                    txtLogradouro.getText(),txtNumero.getText(),txtBairro.getText(),txtCidade.getText(),txtEstado.getText());
+            
+            //instancia classe para interação com o banco   
             DAOS.ClienteDAO updt = new DAOS.ClienteDAO();
+            
+            //chama metodo para edição
             updt.update(cliente);
-            preencherTabela();
-            limparCampos();
+            
+            //preenche tabela com os registros
+            preencherTabela();            
+            
+            //limpa campos
+            SistemaAdega.MetodosGerais.limparCampos(this);
+            
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -354,19 +384,27 @@ public class TelaClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void tabelaClientesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaClientesMouseReleased
+        //se houver linha selecionada
         if(tabelaClientes.getSelectedRow() != 1){
+            //instancia classe para interação com o banco
             ClienteDAO cdao = new ClienteDAO();
+            
+            //preenche campos com dados do cliente selecionado na tabela
             preencherCampos(cdao.select(Integer.parseInt(tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),0).toString())));
         }
     }//GEN-LAST:event_tabelaClientesMouseReleased
 
     private void preencherTabela()
     {
+        //instancia modelo da tabela
         DefaultTableModel modelo = (DefaultTableModel) tabelaClientes.getModel();
+        //limpa dados da tabela
         modelo.setRowCount(0);
         
+        //instancia classe para interação com o banco
         ClienteDAO cdao = new ClienteDAO();
         
+        //para cada cliente na lista, adicionar linha com os atributos
         for(Cliente c: cdao.selectAll()){
             modelo.addRow(new Object[]{
                 c.getId(),
@@ -389,18 +427,7 @@ public class TelaClientes extends javax.swing.JFrame {
         txtEstado.setText(cliente.getEstado());
     }
     
-    private void limparCampos()
-    {
-        txtCodigo.setText("");
-        txtIdade.setText("");
-        txtNome.setText("");
-        txtCep.setText("");
-        txtLogradouro.setText("");
-        txtNumero.setText("");
-        txtBairro.setText("");
-        txtCidade.setText("");
-        txtEstado.setText("");
-    }
+    
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
