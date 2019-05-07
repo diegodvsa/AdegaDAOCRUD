@@ -42,3 +42,5 @@ Basta clonar o repositório e utilizar o mesmo para estudo, modificações ou me
 * Produtos:
 
 ![Tela Produtos](/src/ImagensTelas/Produtos.png)
+
+Sintam-se livres para fazerem o que quiser!
