@@ -4,13 +4,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 
-public void gerarRelatorio() throws IOException
+//orientar melhor
+public void gerarRelatorio(String caminho) throws IOException
     {
         
         String cabecalho = "==================== RELATÓRIO DE CLIENTES ====================";
         String separador = "---------------------------------------------------------------";
         
-        String caminho = "relatorioClientes.txt";
+        
         File arquivo = new File(caminho);       
         
         BufferedWriter writer = new BufferedWriter(new FileWriter(arquivo));
@@ -44,6 +45,8 @@ public void gerarRelatorio() throws IOException
             JOptionPane.showMessageDialog(null, "Erro ao coletar dados: \n" + ex.getMessage(),"ERRO",JOptionPane.ERROR_MESSAGE);
         }
         
+        writer.newLine();
+        writer.newLine();
         writer.write(cabecalho);
         writer.newLine();
         
@@ -76,5 +79,33 @@ public void gerarRelatorio() throws IOException
         writer.flush();    
         writer.close();
         
-        JOptionPane.showMessageDialog(null, "Relatório gerado com sucesso!");
+        JOptionPane.showMessageDialog(null, "Relatório gerado com sucesso em " + caminho);
     }
+    
+    
+    //botao
+    
+    
+    private void btnRelatorioActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        JFrame parentFrame = new JFrame();
+        
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Escolha onde salvar o relatório");
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("*.txt", "txt"));
+        
+        int us = fileChooser.showSaveDialog(parentFrame);
+        File fileToSave = null;
+        
+        
+        if (us == JFileChooser.APPROVE_OPTION) {
+            fileToSave = fileChooser.getSelectedFile(); 
+            String caminho = fileToSave.getAbsolutePath() + ".txt";
+        
+            ClienteDAO dao = new ClienteDAO();
+            try {
+                dao.gerarRelatorio(caminho);
+            } catch (IOException ex) {
+                Logger.getLogger(TelaClientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }    
