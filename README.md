@@ -20,8 +20,9 @@ Não houve nenhum tipo análise para montar o sistema, o mesmo foi criado APENAS
 
 
 ## Instruções 
-  Clonar o repositório
-  Alterar o caminho do banco de dados na classe Conexão de acordo com o seu computador
+Clonar o repositório
+  
+Alterar o caminho do banco de dados na classe Conexão de acordo com o seu computador
 
 
 
