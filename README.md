@@ -18,7 +18,11 @@ Não houve nenhum tipo análise para montar o sistema, o mesmo foi criado APENAS
 * SQLite (Banco de dados) - https://www.sqlite.org/index.html.
 * Pichon (Ícones) - https://icons8.com/.
 
-Basta clonar o repositório e utilizar o mesmo para estudo, modificações ou mesmo como base de um projeto pequeno.
+
+
+Alterar o caminho do banco de dados na classe Conexao (AdegaDAOCRUD/src/Conexao/Conexao.java) de acordo com seu computador
+
+Depois, baste clonar o repositório e utilizar o mesmo para estudo, modificações ou mesmo como base de um projeto pequeno.
 
 
 ## Telas do sistema:
